@@ -1,14 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
-
-interface Params {
-  params: { id: string };
-}
-
-export async function GET(request: Request, { params }: Params) {
-  const { id } = await params;
+export async function GET(
+  request: NextRequest,
+  context: { params: { id: string } }   // ✅ Promise биш
+) {
+  const { id } = context.params;        // ✅ шууд задлах
 
   try {
     const filePath = path.join(process.cwd(), "data", "projects.json");
@@ -24,5 +22,3 @@ export async function GET(request: Request, { params }: Params) {
     );
   }
 }
-
-
