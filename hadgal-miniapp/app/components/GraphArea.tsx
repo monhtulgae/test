@@ -57,6 +57,8 @@ export default function GraphArea({ interest }: NumberProps) {
     }
   }, [dList, isLoaded]);
 
+  const amount = 1;
+
   return (
     <div className="my-2 bg-white p-3">
       {interest === -1 ? (
