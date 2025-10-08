@@ -5,8 +5,17 @@ import { FaStar, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function ListItemClient({ data, url }: { data: any[]; url: string }) {
-  const [items, setItems] = useState(data);
+export default function ListItemClient({
+  data,
+  url,
+}: {
+  data: any[];
+  url: string;
+}) {
+  // ✅ ALWAYS use array-safe initialization
+  const [items, setItems] = useState<Array<any>>(
+    Array.isArray(data) ? data : []
+  );
   const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
   const [query, setQuery] = useState("");
 
@@ -17,6 +26,7 @@ export default function ListItemClient({ data, url }: { data: any[]; url: string
 
       if (isNowFavorite) {
         setItems((prevItems) => {
+          if (!Array.isArray(prevItems)) return [];
           const index = prevItems.findIndex((item) => item.id === id);
           if (index === -1) return prevItems;
           const updated = [...prevItems];
@@ -29,8 +39,11 @@ export default function ListItemClient({ data, url }: { data: any[]; url: string
     });
   };
 
-  const filteredItems = items.filter((org) =>
-    org.name.toLowerCase().includes(query.toLowerCase())
+  // ✅ Prevent crash: ensure items is always array
+  const filteredItems = (Array.isArray(items) ? items : []).filter((org) =>
+    String(org?.name || "")
+      .toLowerCase()
+      .includes(query.toLowerCase())
   );
 
   return (
@@ -72,7 +85,9 @@ export default function ListItemClient({ data, url }: { data: any[]; url: string
                     className="text-yellow-700 mx-2 cursor-pointer transition-transform duration-300"
                   >
                     <div
-                      className={`transition-transform duration-300 ${isFavorited ? "scale-110" : ""}`}
+                      className={`transition-transform duration-300 ${
+                        isFavorited ? "scale-110" : ""
+                      }`}
                     >
                       <FaStar
                         color={isFavorited ? "yellow" : "gray"}
@@ -90,7 +105,9 @@ export default function ListItemClient({ data, url }: { data: any[]; url: string
                   <div className="relative mt-3 w-full h-2 bg-green-200 rounded-full transition-all">
                     <div
                       className="absolute h-2 bg-green-400 rounded-full transition-all"
-                      style={{ width: `${(org.current / org.budget) * 100 || 0}%` }}
+                      style={{
+                        width: `${(org.current / org.budget) * 100 || 0}%`,
+                      }}
                     ></div>
                   </div>
                 )}
