@@ -1,10 +1,11 @@
-// app/organizations/[id]/page.tsx
 import OrganizationDetail from "@/app/components/OrgDetail";
 
 interface PageProps {
   params: { id: string };
 }
 
-export default function Page({ params }: PageProps) {
-  return <OrganizationDetail orgId={params.id} />;
+export default async function Page({ params }: PageProps) {
+  const id = await params.id;
+
+  return <OrganizationDetail orgId={id} />;
 }
