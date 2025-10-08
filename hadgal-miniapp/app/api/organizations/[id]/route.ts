@@ -25,11 +25,16 @@
 //   }
 // }
 
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  request: NextRequest,
+  context: { params: { id: string } | Promise<{ id: string }> }
+) {
+  // Await params if it's a promise (Vercel build)
+  const params = await context.params;
   const { id } = params;
 
   try {
@@ -37,7 +42,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     const fileData = await fs.readFile(filePath, "utf-8");
     const organizations = JSON.parse(fileData);
 
-    // Assuming id is 1-based
     return NextResponse.json(organizations[Number(id) - 1]);
   } catch (error) {
     console.error("Error reading organizations.json:", error);
