@@ -4,8 +4,8 @@ interface PageProps {
   params: { id: string };
 }
 
-export default async function Page({ params }: PageProps) {
-  const id = await params.id;
+export default function Page({ params }: PageProps) {
+  const id = params.id;
 
   return <OrganizationDetail orgId={id} />;
 }
