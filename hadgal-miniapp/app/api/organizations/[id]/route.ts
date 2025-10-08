@@ -8,7 +8,7 @@ interface Params {
 }
 
 export async function GET(request: Request, { params }: Params) {
-  const { id } = await params;
+  const { id } = params;
 
   try {
     const filePath = path.join(process.cwd(), "data", "organizations.json");
