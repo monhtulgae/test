@@ -3,6 +3,7 @@ import ListItemClient from './ListItemClient';
 
 export default async function ListItem({ url }: { url: string }) {
   const response = await fetch(`${config.apiBaseUrl}/api/${url}`);
+  // const response = await fetch(`/api/${url}`);
   const data = await response.json();
 
   return (
