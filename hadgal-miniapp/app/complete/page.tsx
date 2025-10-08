@@ -1,16 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function CompletePage() {
+function CompleteContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  let dataUrl = 'projects';
+
+  let dataUrl = "projects";
   let testId = Number(searchParams.get("project"));
-  if (testId < 1) {
+  if (testId < 1 || isNaN(testId)) {
     testId = Number(searchParams.get("organization"));
-    dataUrl = 'organizations';
+    dataUrl = "organizations";
   }
 
   const projectId = testId;
@@ -22,7 +23,6 @@ export default function CompletePage() {
 
   useEffect(() => {
     const data = localStorage.getItem(url);
-
     if (data) {
       const parsed = JSON.parse(data);
       setProjects(parsed);
@@ -37,7 +37,7 @@ export default function CompletePage() {
 
     const updated = projects.map((proj) =>
       proj.id === projectId
-        ? { ...proj, value: (proj.value || 0) + amount } 
+        ? { ...proj, value: (proj.value || 0) + amount }
         : proj
     );
 
@@ -46,16 +46,14 @@ export default function CompletePage() {
     setAmount(0);
     setSuccess(true);
 
-    router.push('/');
+    router.push("/");
   };
 
   const selectedProj = projects.find((p) => p.id === projectId);
 
   return (
     <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-xl p-6">
-      <h1 className="text-xl font-semibold text-center mb-4">
-        Гүйлгээ
-      </h1>
+      <h1 className="text-xl font-semibold text-center mb-4">Гүйлгээ</h1>
 
       {selectedProj && (
         <p className="mb-3 text-center text-black">
@@ -85,5 +83,13 @@ export default function CompletePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function CompletePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CompleteContent />
+    </Suspense>
   );
 }
