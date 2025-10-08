@@ -7,7 +7,6 @@ export function loadFromStorage<T>(key: string, defaultValue: T): T {
   if (typeof window === "undefined") return defaultValue;
 
   const stored = localStorage.getItem(key);
-  console.log(stored);
   if (!stored) return defaultValue;
 
   try {

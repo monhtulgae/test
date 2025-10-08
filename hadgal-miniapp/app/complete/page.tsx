@@ -22,7 +22,6 @@ export default function CompletePage() {
 
   useEffect(() => {
     const data = localStorage.getItem(url);
-    console.log(data);
 
     if (data) {
       const parsed = JSON.parse(data);
@@ -43,7 +42,6 @@ export default function CompletePage() {
     );
 
     localStorage.setItem(url, JSON.stringify(updated));
-    // console.log(updated);
     setProjects(updated);
     setAmount(0);
     setSuccess(true);

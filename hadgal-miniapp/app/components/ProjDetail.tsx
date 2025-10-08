@@ -19,6 +19,7 @@ interface Project {
   };
   current: number;
   budget: number;
+  irr: number;
 }
 
 interface Props {
@@ -73,7 +74,15 @@ export default function ProjectDetail({ orgId }: Props) {
               {`${(project.current * 0.0035).toLocaleString("mn-MN", { maximumFractionDigits: 0 })} сая / ${(project.budget * 0.0035).toLocaleString("mn-MN", { maximumFractionDigits: 0 })} сая`}
             </span>
           </div>
+        </div>
 
+        <div className="list-decimal list-inside shadow-[0_0_40px_rgba(0,0,0,0.25)] rounded-2xl mb-3 p-3 ">
+          Ногоон ашиг:
+          <div>
+            <div className="font-semibold">
+            {project.irr}%
+          </div>
+          </div>
         </div>
 
         <div className=" text-sm p-3 shadow-[0_0_40px_rgba(0,0,0,0.25)] rounded-2xl mt-3">
