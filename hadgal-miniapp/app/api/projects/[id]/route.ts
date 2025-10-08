@@ -4,9 +4,9 @@ import path from "path";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } } // шууд объект
+  context: { params: { id: string } }   // ✅ Promise биш
 ) {
-  const id = params.id;
+  const { id } = context.params;        // ✅ шууд задлах
 
   try {
     const filePath = path.join(process.cwd(), "data", "projects.json");
