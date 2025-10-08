@@ -6,7 +6,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 type PieChartProps = {
-  data: { label: string; value: number }[];
+  data: { id: number; name: string; value: number }[];
 };
 
 export default function PieChart({ data }: PieChartProps) {
@@ -33,18 +33,20 @@ export default function PieChart({ data }: PieChartProps) {
     'hsl(324, 70%, 50%)',  
   ];
 
+  const filteredData = data.filter((d) => d.value > 0);
+
   const chartData = {
-    labels: data.map((d) => d.label),
+    labels: filteredData.map((d) => d.name),
     datasets: [
       {
-        data: data.map((d) => d.value),
-        backgroundColor: colors.slice(0, data.length),
-        hoverOffset: 40,
+        data: filteredData.map((d) => d.value),
+        backgroundColor: colors.slice(0, filteredData.length),
+        hoverOffset: 20,
       },
     ],
-  };
+  }; 
 
-  const options = {
+  const option = {
     plugins: {
       legend: {
         display: true,
@@ -55,12 +57,15 @@ export default function PieChart({ data }: PieChartProps) {
             size: 10,
           },
           // color: "#1f2937", 
-          boxWidth: 25,
+          boxWidth: 10,
           padding: 5,
         },
       },
+      Tooltip: {
+        enabled: true,
+      }
     },
   };
 
-  return <Pie data={chartData} options={options} />;
+  return <Pie data={chartData} options={option} />;
 }
