@@ -7,9 +7,9 @@ import { config } from "@/config";
 export default function NGO() 
 {
   return (
-    <div className="text-black w-full rounded-2xl bg-color m-0">
+    <div className="text-black bg-color m-0">
       <BackCoin uri={`${config.apiBaseUrl}/`} />
-      <div className="m-3 text-2xl w-3xl">Сайн үйлс</div>
+      <div className="mt-1 ml-4 mb-4 text-2xl font-bold ">Сайн үйлс</div>
       <GraphArea amount={32} interest={-1} />
       <ListItem url="organizations" />
     </div>

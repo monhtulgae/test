@@ -7,7 +7,6 @@ import { useLocalSavings } from "../hooks/useLocalSavings";
 import { useLocalTokens } from "../hooks/useLocalTokens";
 import toast from "react-hot-toast";
 
-
 export default function Home() {
   const userId = useUserId();
   const { getAll } = useLocalSavings();
@@ -25,6 +24,12 @@ export default function Home() {
   const handleClick = () => {
     router.push("/create_savings");
   };
+  const handleClick1 = () => {
+    router.push("/charity");
+  };
+  const handleClick2 = () => {
+    router.push("/greenasset")
+  }
 
   const handleGoToSavings = (id: string) => {
     router.push(`/savings/${id}`);
@@ -61,11 +66,11 @@ export default function Home() {
       </div>
 
       <div className="flex justify-between mb-4 space-x-2">
-        <button className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
+        <button onClick={handleClick1} className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
           <Image src="/images/kind.png" alt="icon" width={40} height={40} />
           <span className="mt-2 text-black font-bold">Сайн үйлс</span>
         </button>
-        <button className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
+        <button onClick={handleClick2} className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
           <Image src="/images/green.png" alt="icon" width={40} height={40} />
           <span className="mt-2 text-black font-bold">Ногоон</span>
         </button>
@@ -146,7 +151,7 @@ export default function Home() {
       </div>
       {showDepositModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-5 rounded-lg shadow-lg w-90 max-w-sm">
+          <div className="bg-white p-5 rounded-lg shadow-lg w-100">
             <h2 className="text-2xl font-bold mb-3 text-center text-gray-700">Орлого нэмэх</h2>
             <input
               type="number"
@@ -161,7 +166,7 @@ export default function Home() {
                   setShowDepositModal(false);
                   setDepositAmount("");
                 }}
-                className="px-4 py-2 bg-gray-400 text-white rounded text-gray-700 text-xl font-bold hover:bg-gray-600 hover:text-white hover:animate-pulse"
+                className="px-4 py-2 bg-gray-400 text-white rounded text-gray-700 text-xl w-32 font-bold hover:bg-gray-600 hover:text-white hover:animate-pulse"
               >
                 Болих
               </button>
@@ -199,7 +204,7 @@ export default function Home() {
                   setDepositAmount("");
                   setShowDepositModal(false);
                 }}
-                className="px-4 py-2 bg-green-600 text-white rounded text-xl font-bold hover:bg-green-900 hover:text-white hover:animate-pulse"
+                className="px-4 py-2 bg-green-600 text-white rounded text-xl font-bold w-32 hover:bg-green-900 hover:text-white hover:animate-pulse"
               >
                 Нэмэх
               </button>
@@ -207,7 +212,7 @@ export default function Home() {
           </div>
         </div>
       )}
-      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-t-lg shadow-lg border-t border-gray-200 w-100 flex justify-between"> 
+      {/* <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-t-lg shadow-lg border-t border-gray-200 w-100 flex justify-between"> 
         <button className="flex flex-col items-center text-gray-600 p-2 rounded-lg w-20 hover:shadow-md hover:bg-gray-200 hover:text-black hover:font-bold hover:animate-pulse"> 
           <Image src="/images/home.png" alt="home" width={30} height={30} /> 
           <span>Нүүр</span> 
@@ -224,7 +229,7 @@ export default function Home() {
           <Image src="/images/saving.png" alt="home" width={30} height={30} /> 
           <span>Хадгал</span> 
           </button> 
-      </div>
+      </div> */}
     </div>
   );
 }
