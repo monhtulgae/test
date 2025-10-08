@@ -1,9 +1,11 @@
 import ProjectDetail from "@/app/components/ProjDetail";
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default function Page({ params }: PageProps) {
-  return <ProjectDetail orgId={params.id} />;
+export default async function Page({ params }: PageProps) {
+  const { id } = await params;
+
+  return <ProjectDetail orgId={id} />;
 }
