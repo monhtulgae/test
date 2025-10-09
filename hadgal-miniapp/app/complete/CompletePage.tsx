@@ -17,7 +17,7 @@ export default function CompletePage() {
   const url = dataUrl;
 
   const [projects, setProjects] = useState<any[]>([]);
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<string>('');
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -30,20 +30,20 @@ export default function CompletePage() {
   }, []);
 
   const handleTransaction = () => {
-    if (!projectId || amount <= 0) {
+    if (!projectId || Number(amount) <= 0) {
       alert("Дүнг зөв оруулна уу.");
       return;
     }
 
     const updated = projects.map((proj) =>
       proj.id === projectId
-        ? { ...proj, value: (proj.value || 0) + amount } 
+        ? { ...proj, value: (proj.value || 0) + Number(amount) } 
         : proj
     );
 
     localStorage.setItem(url, JSON.stringify(updated));
     setProjects(updated);
-    setAmount(0);
+    setAmount("0");
     setSuccess(true);
 
     router.push('/');
@@ -52,38 +52,104 @@ export default function CompletePage() {
   const selectedProj = projects.find((p) => p.id === projectId);
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-xl p-6">
-      <h1 className="text-xl font-semibold text-center mb-4">
-        Гүйлгээ
-      </h1>
+      <div className="mx-auto h-[100vh] bg-white shadow-lg rounded-xl p-6">
+        <h1 className="text-2xl text-black font-bold text-center mb-4">
+          Гүйлгээ
+        </h1>
 
-      {selectedProj && (
-        <p className="mb-3 text-center text-black">
-          Төсөл: <span className="font-semibold">{selectedProj.name}</span>
-        </p>
-      )}
+        {selectedProj && (
+          <p className="mb-3 text-center text-black">
+            Төсөл: <span className="font-semibold">{selectedProj.name}</span>
+          </p>
+        )}
 
-      <label className="block mb-2 text-black">Дүн (₮):</label>
-      <input
-        type="number"
-        value={amount}
-        onChange={(e) => setAmount(Number(e.target.value))}
-        className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4"
-        placeholder="₮ оруулна уу"
-      />
+        <label className="block mb-2 text-black">Дүн (₮):</label>
+        <input
+          type="text"
+          value={amount}
+          readOnly
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 text-center text-lg"
+          placeholder="₮ оруулна уу"
+        />
 
-      <button
-        onClick={handleTransaction}
-        className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-lg transition"
-      >
-        Баталгаажуулах
-      </button>
-
-      {success && (
-        <div className="mt-4 text-center text-green-600 font-medium animate-pulse">
-          Гүйлгээ амжилттай хийгдлээ!
+        <div>
+          slide area
         </div>
-      )}
-    </div>
+
+        <div className="grid grid-cols-3 gap-3 mt-4">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+            <button
+              key={num}
+              onClick={() => setAmount((prev) => prev + num.toString())}
+              className="bg-gray-100 text-black py-3 rounded-lg text-xl active:bg-gray-200"
+            >
+              {num}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setAmount((prev) => prev.slice(0, -1))}
+            className="bg-red-100 text-black py-3 rounded-lg text-xl active:bg-red-200"
+          >
+            ⌫
+          </button>
+
+          <button
+            onClick={() => setAmount((prev) => prev + "0")}
+            className="bg-gray-100 text-black py-3 rounded-lg text-xl active:bg-gray-200"
+          >
+            0
+          </button>
+
+          <button
+            onClick={handleTransaction}
+            className="bg-green-500 text-white py-3 rounded-lg text-xl active:bg-green-600"
+          >
+            Next →
+          </button>
+        </div>
+
+        {success && (
+          <div className="mt-4 text-center text-green-600 font-medium animate-pulse">
+            Гүйлгээ амжилттай хийгдлээ!
+          </div>
+        )}
+      </div>
+
+
+    
+    // <div className="mx-auto h-[100vh] bg-white shadow-lg rounded-xl p-6">
+    //   <h1 className="text-2xl text-black font-bold text-center mb-4">
+    //     Гүйлгээ
+    //   </h1>
+
+    //   {selectedProj && (
+    //     <p className="mb-3 text-center text-black">
+    //       Төсөл: <span className="font-semibold">{selectedProj.name}</span>
+    //     </p>
+    //   )}
+
+    //   <label className="block mb-2 text-black">Дүн (₮):</label>
+    //   <input
+    //     type="number"
+    //     value={amount}
+    //     onChange={(e) => setAmount(Number(e.target.value))}
+    //     className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4"
+    //     placeholder="₮ оруулна уу"
+    //   />
+
+    //   <button
+    //     onClick={handleTransaction}
+    //     className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-lg transition"
+    //   >
+    //     Баталгаажуулах
+    //   </button>
+
+    //   {success && (
+    //     <div className="mt-4 text-center text-green-600 font-medium animate-pulse">
+    //       Гүйлгээ амжилттай хийгдлээ!
+    //     </div>
+    //   )}
+    // </div>
   );
 }
