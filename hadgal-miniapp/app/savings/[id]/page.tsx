@@ -69,8 +69,8 @@ export default function SavingsDetailPage() {
       maturityInterest = amount * (annualRate / 100) * (durationMonths / 12);
     }
 
-    const interestDate = opened;
-    const nextInterestDate = addDays(today, 30);
+    const interestDate = addDays(opened, 30);
+    const nextInterestDate = addDays(today, 60);
 
     return {
       dayInterest,
@@ -137,14 +137,14 @@ export default function SavingsDetailPage() {
         </div>
       </div>
 
-      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 shadow-xl mb-6">
-        <div className="flex items-start justify-between gap-4">
+      <div className="bg-white/3 rounded-2xl p-5 shadow-xl mb-6">
+        <div className="flex items-start justify-between gap-2">
           <div>
-            <p className="text-white/80 text-sm">Нийт үлдэгдэл</p>
+            <p className="text-white/90 text-sm">Нийт үлдэгдэл</p>
             <p className="text-2xl sm:text-4xl font-extrabold text-white mt-1">
               {fmtMoney(Number(saving.amount) || 0)}
             </p>
-            <p className="text-white/70 text-sm mt-2">
+            <p className="text-white/90 text-lg mt-2">
               {saving.typeId === "term"
                 ? "Хугацаатай хадгаламж"
                 : saving.typeId === "green"
@@ -156,11 +156,11 @@ export default function SavingsDetailPage() {
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <InfoPill label="Өдрийн хүү" value={computed.dayInterestStr} />
-          <InfoPill label="Хуримтлагдсан хүү" value={computed.accumulatedInterestStr} />
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <InfoPill label="Өдрийн хүү дүн" value={computed.dayInterestStr} />
+          <InfoPill label="Хуримтлагдсан хүү дүн" value={computed.accumulatedInterestStr} />
           <InfoPill
-            label="Эцсийн хүү (тооцоо)"
+            label="Эцсийн хүү (тооцоо) дүн"
             value={computed.maturityInterestStr}
           />
         </div>
@@ -168,11 +168,10 @@ export default function SavingsDetailPage() {
 
       <div className="bg-white rounded-2xl p-5 shadow-lg mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <DetailRow label="Дансны нэр" value={saving.type} />
           <DetailRow label="Хүү (жилийн)" value={`${saving.interest}%`} />
           <DetailRow label="Дансны дугаар" value={formatAccount(saving.id)} />
           <DetailRow label="Харилцах данс" value={formatAccount(saving.dans)} />
-          <DetailRow label="Нээлгэсэн огноо" value={saving.openedAt} />
+          <DetailRow label="Нээсэн огноо" value={saving.openedAt} />
           {saving.typeId === "term" && (
             <DetailRow
               label="Хугацаа"
@@ -185,7 +184,7 @@ export default function SavingsDetailPage() {
                 label="Зорилгын нийт дүн"
                 value={fmtMoney(Number((saving as any).goalAmount) || 0)}
               />
-              <DetailRow label="Зорилгын зорилго" value={(saving as any).goalPurpose} />
+              <DetailRow label="Зорилго" value={(saving as any).goalPurpose} />
               <DetailRow
                 label="Хугацаа"
                 value={`${(saving as any).durationMonths} сар`}
@@ -195,17 +194,8 @@ export default function SavingsDetailPage() {
           {saving.typeId === "green" && (
             <DetailRow label="Ногоон төсөл" value={(saving as any).greenType} />
           )}
-        </div>
-      </div>
-
-      <div className="bg-white rounded-2xl p-5 shadow-lg mb-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <DetailRow label="Өдрийн хүү" value={computed.dayInterestStr} />
-          <DetailRow label="Тооцсон хоног" value={`${computed.daysSoFar} хоног`} />
-          <DetailRow label="Хуримтлагдсан хүү" value={computed.accumulatedInterestStr} />
-          <DetailRow label="Эцсийн хүү (тооцоо)" value={computed.maturityInterestStr} />
           <DetailRow label="Анхны хүү олголт (огноо)" value={computed.interestDateStr} />
-          <DetailRow label="Дараагийн олголт" value={computed.nextInterestDateStr} />
+          <DetailRow label="Дараагийн олголт (огноо)" value={computed.nextInterestDateStr} />
         </div>
       </div>
       <div className="w-full rounded-2xl bg-white/10 border border-white/20 overflow-hidden shadow-inner">
@@ -228,8 +218,8 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 
 function InfoPill({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-white/30 bg-white/10 backdrop-blur-md px-4 py-3 text-white shadow">
-      <p className="text-white/80 text-sm">{label}</p>
+    <div className="rounded-xl bg-white/5 backdrop-blur-md px-4 py-3 text-white shadow">
+      <p className="text-white/90 text-sm">{label}</p>
       <p className="text-lg font-bold mt-1">{value}</p>
     </div>
   );

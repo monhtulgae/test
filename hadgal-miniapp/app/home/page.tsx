@@ -45,9 +45,11 @@ export default function Home() {
   }, [userId, getAll]);
 
   return (
-    <div className="min-h-screen bg-gray-200 pb-24 p-7">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold text-black">Хуримтлал</h1>
+    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-emerald-900 pb-24 p-4">
+      <div className="flex justify-between items-center mb-6 mt-3 ml-1">
+        <div>
+          <h1 className="text-2xl font-bold text-white">Хуримтлал</h1>
+        </div>
         <button
           onClick={() => {
             toast.success(
@@ -58,77 +60,123 @@ export default function Home() {
               }
             );
           }}
-          className="flex items-center space-x-1"
+          className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 hover:bg-white/20 transition-all"
         >
-          <span className="text-green-500 font-bold">{token}</span>
-          <Image src="/images/coin.png" alt="coin" width={30} height={30} />
+          <span className="text-green-300 font-bold">{token}</span>
+          <Image src="/images/coin.png" alt="coin" width={24} height={24} />
         </button>
       </div>
 
-      <div className="flex justify-between mb-4 space-x-2">
-        <button onClick={handleClick1} className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
-          <Image src="/images/kind.png" alt="icon" width={40} height={40} />
-          <span className="mt-2 text-black font-bold">Сайн үйлс</span>
+      <div className="flex justify-between mb-6 space-x-3">
+        <button 
+          onClick={handleClick1} 
+          className="flex flex-col items-center justify-center bg-white rounded-xl shadow-lg p-4 w-full max-w-32 h-28 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-emerald-100"
+        >
+          <div className="bg-emerald-100 rounded-full p-2 mb-2">
+            <Image src="/images/kind.png" alt="icon" width={32} height={32} />
+          </div>
+          <span className="text-sm font-semibold text-gray-800">Сайн үйлс</span>
         </button>
-        <button onClick={handleClick2} className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
-          <Image src="/images/green.png" alt="icon" width={40} height={40} />
-          <span className="mt-2 text-black font-bold">Ногоон</span>
+        
+        <button 
+          onClick={handleClick2} 
+          className="flex flex-col items-center justify-center bg-white rounded-xl shadow-lg p-4 w-full max-w-32 h-28 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-emerald-100"
+        >
+          <div className="bg-emerald-100 rounded-full p-2 mb-2">
+            <Image src="/images/green.png" alt="icon" width={32} height={32} />
+          </div>
+          <span className="text-sm font-semibold text-gray-800">Ногоон</span>
         </button>
-        <button className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
-          <Image src="/images/token.png" alt="icon" width={40} height={40} />
-          <span className="mt-2 text-black font-bold">Оноо</span>
+        
+        <button 
+          className="flex flex-col items-center justify-center bg-white rounded-xl shadow-lg p-4 w-full max-w-32 h-28 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-emerald-100"
+        >
+          <div className="bg-emerald-100 rounded-full p-2 mb-2">
+            <Image src="/images/token.png" alt="icon" width={32} height={32} />
+          </div>
+          <span className="text-sm font-semibold text-gray-800">Оноо</span>
         </button>
       </div>
 
-      <div className="bg-green-600 rounded-xl p-4 flex items-center justify-between mb-4 text-white">
-        <div>
-          <p className="font-bold text-xl">Digi хадгал ✨</p>
-          <p className="font-normal text-white/80">Өнөөдрөөс эхлээд ирээдүйдээ хөрөнгө оруулья!</p>
+      <div className="bg-gradient-to-r from-emerald-600 to-teal-500 rounded-2xl p-5 flex items-center justify-between mb-6 text-white shadow-lg">
+        <div className="flex-1">
+          <p className="font-bold text-xl mb-1">Digi хадгал ✨</p>
+          <p className="font-normal text-white/90 text-sm mb-4">Өнөөдрөөс эхлээд ирээдүйдээ хөрөнгө оруулья!</p>
           <button
             onClick={handleClick}
-            className="mt-2 bg-green-400 px-4 py-2 rounded-lg font-semibold hover:bg-green-900 flex items-center hover:animate-pulse"
-          >
-            <span>Хуримтлал үүсгэх</span>
+            className="bg-gradient-to-r from-white via-gray-200 to-white text-emerald-800 px-4 py-3.5 rounded-xl font-bold hover:bg-white flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] border border-emerald-200 shadow-sm group"
+            >
+            <span className="text-lg">Хуримтлал үүсгэх</span>
             <Image
-              src="/images/arrow-right.png"
-              alt="arrow"
-              width={20}
-              height={20}
-              className="inline-block ml-2"
+                src="/images/image.png"
+                alt="arrow"
+                width={25}
+                height={25}
+                className="ml-4 mt-1 transition-transform duration-300 group-hover:translate-x-1"
             />
-          </button>
+        </button>
         </div>
-        <Image src="/images/digi-hero.png" alt="Digi Hero" width={100} height={100} />
+        <div className="flex-shrink-0 ml-4">
+          <Image src="/images/digi-hero.png" alt="Digi Hero" width={100} height={100} />
+        </div>
       </div>
 
-      <div className="bg-white rounded-xl p-4 w-full ">
-        <h2 className="font-bold mb-2 text-black text-xl">Миний хуримтлал</h2>
+      <div className="bg-white rounded-2xl p-5 w-full shadow-lg">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="font-bold text-xl text-gray-800">Миний хуримтлал</h2>
+          {savings.length > 0 && (
+            <div className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium">
+              {savings.length} ширхэг
+            </div>
+          )}
+        </div>
 
         {loading ? (
-          <p>Ачаалж байна...</p>
+          <div className="flex justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
+          </div>
         ) : savings.length === 0 ? (
-          <p className="text-gray-500">Танд одоогоор хадгаламж байхгүй байна.</p>
+          <div className="text-center py-8">
+            <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+              <Image src="/images/saving.png" alt="saving" width={32} height={32} />
+            </div>
+            <p className="text-gray-500 mb-4">Танд одоогоор хадгаламж байхгүй байна.</p>
+            <button
+              onClick={handleClick}
+              className="bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-emerald-600 transition-colors"
+            >
+              Эхний хадгаламж үүсгэх
+            </button>
+          </div>
         ) : (
           <>
-            <p className="text-gray-600 mb-4">
-              Нийт хуримтлал: ₮
-              {new Intl.NumberFormat('mn-MN').format(
-                savings.reduce((sum, s) => sum + s.amount, 0)
-              )}
-            </p>
-            <div className="space-y-3">
+            <div className="bg-emerald-50 rounded-xl p-4 mb-5">
+              <p className="text-gray-600 text-sm">Нийт хуримтлал</p>
+              <p className="text-2xl font-bold text-emerald-700">
+                ₮{new Intl.NumberFormat('mn-MN').format(
+                  savings.reduce((sum, s) => sum + s.amount, 0)
+                )}
+              </p>
+            </div>
+            
+            <div className="space-y-4">
               {savings.map((s) => (
-                <div key={s.id} className="flex flex-col justify-between p-3 border rounded-lg border-gray-200 hover:shadow-lg hover:scale-105 transition-transform duration-200">
-                  <div className="flex flex-row justify-between items-center mb-2">
+                <div 
+                  key={s.id} 
+                  className="flex flex-col p-4 border border-gray-100 rounded-xl hover:shadow-md hover:border-emerald-100 transition-all duration-300 bg-white"
+                >
+                  <div className="flex flex-row justify-between items-center mb-3">
                     <div>
-                      <p className="font-normal text-gray-600">{s.type}:</p>
-                      <p className="font-normal text-gray-400">{formatAccount(s.id)}</p>
+                      <p className="font-medium text-gray-800">{s.type}</p>
+                      <p className="font-normal text-gray-500 text-sm">{formatAccount(s.id)}</p>
                     </div>
-                    <p className="text-gray-600 font-bold">₮{new Intl.NumberFormat('mn-MN').format(s.amount)}</p>
+                    <p className="text-gray-800 font-bold text-lg">
+                      ₮{new Intl.NumberFormat('mn-MN').format(s.amount)}
+                    </p>
                   </div>
                   <div className="flex flex-row justify-between space-x-2">
                     <button
-                      className="px-3 py-1 bg-gray-200 text-gray-600 rounded-lg hover:bg-green-600 hover:text-white hover:animate-pulse"
+                      className="px-4 py-2 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition-colors flex-1"
                       onClick={() => {
                         setSelectedSavingId(s.id);
                         setShowDepositModal(true);
@@ -138,7 +186,7 @@ export default function Home() {
                     </button>
                     <button
                       onClick={() => handleGoToSavings(s.id)}
-                      className="px-3 py-1 bg-gray-200 text-gray-600 rounded-lg hover:bg-green-600 hover:text-white hover:animate-pulse"
+                      className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors flex-1"
                     >
                       Дэлгэрэнгүй
                     </button>
@@ -149,30 +197,41 @@ export default function Home() {
           </>
         )}
       </div>
+
       {showDepositModal && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-5 rounded-lg shadow-lg w-100">
-            <h2 className="text-2xl font-bold mb-3 text-center text-gray-700">Орлого нэмэх</h2>
-            <input
-              type="number"
-              placeholder="Дүн (₮)"
-              value={depositAmount}
-              onChange={(e) => setDepositAmount(e.target.value)}
-              className="w-full border p-2 rounded mb-4 border-gray-600 text-gray-700"
-            />
-            <div className="flex justify-between">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+          <div className="bg-gray-100 p-6 rounded-2xl shadow-xl w-full max-w-md">
+            <h2 className="text-2xl font-bold mb-4 text-center text-emerald-900">Орлого нэмэх</h2>
+            <div className="mb-5">
+              <label className="block text-gray-600 text-sm mb-2">Дүн (₮)</label>
+              <input
+                type="number"
+                placeholder="0"
+                value={depositAmount}
+                onChange={(e) => setDepositAmount(e.target.value)}
+                className="w-full bg-white border border-green-900 p-3 rounded-lg text-gray-700"
+              />
+            </div>
+            <div className="flex justify-between space-x-3">
               <button
                 onClick={() => {
                   setShowDepositModal(false);
                   setDepositAmount("");
                 }}
-                className="px-4 py-2 bg-gray-400 text-white rounded text-gray-700 text-xl w-32 font-bold hover:bg-gray-600 hover:text-white hover:animate-pulse"
+                className="px-4 py-3 bg-gray-300 text-gray-700 text-xl font-bold rounded-lg hover:bg-gray-400 transition-colors flex-1"
               >
                 Болих
               </button>
               <button
                 onClick={() => {
-                  if (!depositAmount || Number(depositAmount) <= 0) return;
+                  if (!depositAmount || Number(depositAmount) <= 0) {
+                    toast.error("Дүнгээ зөв оруулна уу!", {
+                      duration: 3000,
+                      position: "top-center",
+                    });
+                    return;
+                  }
+                  
                   const updated = savings.map((s) =>
                     s.id === selectedSavingId
                       ? { ...s, amount: s.amount + Number(depositAmount) }
@@ -190,21 +249,17 @@ export default function Home() {
                       duration: 4000,
                       position: "top-center",
                     });
-                    toast.success("Орлого амжилттай хийгдлээ!", {
-                      duration: 3000,
-                      position: "top-center",
-                    });
-                  } else {
-                    toast.success("Орлого амжилттай хийгдлээ!", {
-                      duration: 3000,
-                      position: "top-center",
-                    });
                   }
+                  
+                  toast.success("Орлого амжилттай хийгдлээ!", {
+                    duration: 3000,
+                    position: "top-center",
+                  });
 
                   setDepositAmount("");
                   setShowDepositModal(false);
                 }}
-                className="px-4 py-2 bg-green-600 text-white rounded text-xl font-bold w-32 hover:bg-green-900 hover:text-white hover:animate-pulse"
+                className="px-4 py-3 bg-emerald-500 text-white text-xl rounded-lg font-bold hover:bg-emerald-600 transition-colors flex-1"
               >
                 Нэмэх
               </button>
@@ -212,24 +267,6 @@ export default function Home() {
           </div>
         </div>
       )}
-      {/* <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-t-lg shadow-lg border-t border-gray-200 w-100 flex justify-between"> 
-        <button className="flex flex-col items-center text-gray-600 p-2 rounded-lg w-20 hover:shadow-md hover:bg-gray-200 hover:text-black hover:font-bold hover:animate-pulse"> 
-          <Image src="/images/home.png" alt="home" width={30} height={30} /> 
-          <span>Нүүр</span> 
-        </button> 
-        <button className="flex flex-col items-center text-gray-600 p-2 rounded-lg w-20 hover:shadow-md hover:bg-gray-200 hover:text-black hover:font-bold hover:animate-pulse">
-          <Image src="/images/gift.png" alt="home" width={30} height={30} /> 
-          <span>Лояалти</span> 
-        </button> 
-        <button className="flex flex-col items-center text-gray-600 p-2 rounded-lg w-20 hover:shadow-md hover:bg-gray-200 hover:text-black hover:font-bold hover:animate-pulse"> 
-          <Image src="/images/pocket.png" alt="home" width={30} height={30} /> 
-          <span>Хэтэвч</span> 
-        </button> 
-        <button className="flex flex-col items-center text-black shadow-md p-2 rounded-lg bg-gray-200 w-20 font-bold"> 
-          <Image src="/images/saving.png" alt="home" width={30} height={30} /> 
-          <span>Хадгал</span> 
-          </button> 
-      </div> */}
     </div>
   );
 }
