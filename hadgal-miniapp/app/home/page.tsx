@@ -46,7 +46,7 @@ export default function Home() {
   }, [userId, getAll]);
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24 p-7">
+    <div className="min-h-screen bg-gray-200 pb-24 p-7">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold text-black">Хуримтлал</h1>
         <button

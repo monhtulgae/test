@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import GraphArea from "../components/GraphArea";
 import ListItem from "../components/ListItem";
 import '../globals.css';
