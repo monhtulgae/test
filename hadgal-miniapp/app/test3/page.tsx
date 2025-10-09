@@ -8,7 +8,7 @@ import { useUserId } from "@/app/hooks/useUserId";
 import { useLocalSavings, Saving } from "@/app/hooks/useLocalSavings";
 import { useProjects } from "@/app/hooks/useProjects";
 import { useLocalTokens } from "@/app/hooks/useLocalTokens";
-import { Project } from "@/app/type/Project";
+import { Projects } from "@/app/type/Project";
 
 export default function GreenSavingDetail() {
   const { id } = useParams();
@@ -19,7 +19,7 @@ export default function GreenSavingDetail() {
   const { getBalance } = useLocalTokens();
 
   const [saving, setSaving] = useState<Saving | null>(null);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Projects[]>([]);
   const [tokens, setTokens] = useState<number>(0);
 
   useEffect(() => {
