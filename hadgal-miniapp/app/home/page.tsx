@@ -3,52 +3,55 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useUserId } from "../hooks/useUserId";
-import { useLocalSavings } from "../hooks/useLocalSavings";
 import { useLocalTokens } from "../hooks/useLocalTokens";
 import toast from "react-hot-toast";
 import { config } from "@/config/index";
 
 export default function Home() {
   const userId = useUserId();
-  const { getAll } = useLocalSavings();
-  const { getBalance, addTokens } = useLocalTokens();
+  const { getBalance } = useLocalTokens();
   const token = userId ? getBalance(userId) : 0;
 
   const [savings, setSavings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showDepositModal, setShowDepositModal] = useState(false);
-  const [selectedSavingId, setSelectedSavingId] = useState<string | null>(null);
-  const [depositAmount, setDepositAmount] = useState("");
 
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`${config.apiBaseUrl}/create_savings`);
+    router.push(`${config.apiBaseUrl}/test1`);
   };
   const handleClick1 = () => {
     router.push(`${config.apiBaseUrl}/charity`);
   };
-  const handleClick2 = () => {
-    router.push(`${config.apiBaseUrl}/greenasset`);
-  }
-
-  const handleGoToSavings = (id: string) => {
-    router.push(`/savings/${id}`);
-  };
-
-  const formatAccount = (id: string) => id.replace(/(.{4})/g, "$1 ").trim();
 
   useEffect(() => {
-    if (!userId) return;
-    const data = getAll(userId);
-    setSavings(data);
-    setLoading(false);
-  }, [userId, getAll]);
+    try {
+      const stored = localStorage.getItem("savings");
+      if (stored) {
+        const data = JSON.parse(stored);
+        if (userId) {
+          const filtered = data.filter((p: any) => p.userId === userId);
+          setSavings(filtered);
+        } else {
+          setSavings(data);
+        }
+      } else {
+        setSavings([]);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("LocalStorage-оос өгөгдөл уншихад алдаа гарлаа!");
+    } finally {
+      setLoading(false);
+    }
+  }, [userId]);
 
   return (
-    <div className="min-h-screen bg-gray-200 pb-24 p-7">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold text-black">Хуримтлал</h1>
+    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-emerald-800 pb-24 p-4">
+      <div className="flex justify-between items-center mb-5 mt-3 ml-1">
+        <div>
+          <h1 className="text-2xl font-bold text-white">АмьдСан</h1>
+        </div>
         <button
           onClick={() => {
             toast.success(
@@ -59,90 +62,119 @@ export default function Home() {
               }
             );
           }}
-          className="flex items-center space-x-1"
+          className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 hover:bg-white/20 transition-all"
         >
-          <span className="text-green-500 font-bold">{token}</span>
-          <Image src="/images/coin.png" alt="coin" width={30} height={30} />
+          <span className="text-green-300 text-sm font-bold">{token}</span>
+          <Image src="/images/coin.png" alt="coin" width={18} height={18} />
         </button>
       </div>
 
-      <div className="flex justify-between mb-4 space-x-2">
-        <button onClick={handleClick1} className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
-          <Image src="/images/kind.png" alt="icon" width={40} height={40} />
-          <span className="mt-2 text-black font-bold">Сайн үйлс</span>
-        </button>
-        <button onClick={handleClick2} className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
-          <Image src="/images/green.png" alt="icon" width={40} height={40} />
-          <span className="mt-2 text-black font-bold">Ногоон</span>
-        </button>
-        <button className="flex flex-col justify-center bg-white rounded-lg shadow-md p-4 w-40 h-30 hover:shadow-lg hover:scale-105 transition-transform duration-200">
-          <Image src="/images/token.png" alt="icon" width={40} height={40} />
-          <span className="mt-2 text-black font-bold">Оноо</span>
+      <div className="flex justify-between mb-3 space-x-3">
+        <button
+          onClick={handleClick1}
+          className="flex flex-row bg-white rounded-xl shadow-lg p-4 w-full h-20 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-emerald-100"
+        >
+          <div className="p-2">
+            <Image src="/images/kind.png" alt="icon" width={40} height={40} />
+          </div>
+          <span className="text-xl font-bold text-gray-800 mt-2 ml-7">
+            Сайн үйлс
+          </span>
         </button>
       </div>
 
-      <div className="bg-green-600 rounded-xl p-4 flex items-center justify-between mb-4 text-white">
-        <div>
-          <p className="font-bold text-xl">Digi хадгал ✨</p>
-          <p className="font-normal text-white/80">Өнөөдрөөс эхлээд ирээдүйдээ хөрөнгө оруулья!</p>
+      <div className="bg-gradient-to-r from-emerald-600 to-teal-500 rounded-2xl p-2 flex items-center justify-between mb-3 text-white shadow-lg">
+        <div className="flex-1 ml-1">
+          <p className="font-bold text-xl mb-1">Ногоон хөрөнгө ✨</p>
+          <p className="font-normal text-white/90 text-sm mb-4">
+            Өнөөдрөөс эхлээд ирээдүйдээ хөрөнгө оруулья!
+          </p>
           <button
             onClick={handleClick}
-            className="mt-2 bg-green-400 px-4 py-2 rounded-lg font-semibold hover:bg-green-900 flex items-center hover:animate-pulse"
+            className="bg-gradient-to-r w-59 from-white via-gray-200 to-white text-emerald-800 px-2 py-2 rounded-xl font-bold hover:bg-white flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] border border-emerald-200 shadow-sm group"
           >
-            <span>Хуримтлал үүсгэх</span>
+            <span className="text-sm">Ногоо хөрөнгө оруулалт</span>
             <Image
-              src="/images/arrow-right.png"
+              src="/images/image.png"
               alt="arrow"
-              width={20}
-              height={20}
-              className="inline-block ml-2"
+              width={25}
+              height={25}
+              className="ml-4 mt-1 transition-transform duration-300 group-hover:translate-x-1"
             />
           </button>
         </div>
-        <Image src="/images/digi-hero.png" alt="Digi Hero" width={100} height={100} />
+        <div className="flex-shrink-0 ml-4">
+          <Image src="/images/digi-hero.png" alt="Digi Hero" width={100} height={100} />
+        </div>
       </div>
 
-      <div className="bg-white rounded-xl p-4 w-full ">
-        <h2 className="font-bold mb-2 text-black text-xl">Миний хуримтлал</h2>
+      <div className="bg-white rounded-2xl p-5 w-full shadow-lg">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="font-bold text-lg text-gray-800">Миний өгөөж</h2>
+          {savings.length > 0 && (
+            <div className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium">
+              {savings.length} ширхэг
+            </div>
+          )}
+        </div>
 
         {loading ? (
-          <p>Ачаалж байна...</p>
+          <div className="flex justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
+          </div>
         ) : savings.length === 0 ? (
-          <p className="text-gray-500">Танд одоогоор хадгаламж байхгүй байна.</p>
+          <div className="text-center py-8">
+            <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+              <Image src="/images/saving.png" alt="saving" width={32} height={32} />
+            </div>
+            <p className="text-gray-500 mb-4">
+              Танд одоогоор хөрөнгө оруулсан төсөл байхгүй байна.
+            </p>
+            <button
+              onClick={handleClick}
+              className="bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-emerald-600 transition-colors"
+            >
+              Эхний хөрөнгө оруулах
+            </button>
+          </div>
         ) : (
           <>
-            <p className="text-gray-600 mb-4">
-              Нийт хуримтлал: ₮
-              {new Intl.NumberFormat('mn-MN').format(
-                savings.reduce((sum, s) => sum + s.amount, 0)
-              )}
-            </p>
-            <div className="space-y-3">
+          <div className="flex flex-row justify-between bg-emerald-50 rounded-xl mb-2">
+            <div className="p-4 border border-r-white ">
+              <p className="text-gray-600 text-sm">Нийт хөрөнгө оруулалт</p>
+              <p className="text-lg font-bold text-emerald-700">
+                ₮
+                {new Intl.NumberFormat("mn-MN").format(
+                  savings.reduce((sum, s) => sum + s.amount, 0)
+                )}
+              </p>
+            </div>
+            <div className="p-4">
+              <p className="text-gray-600 text-sm">Нийт ашиг</p>
+              <p className="text-lg font-bold text-emerald-700">
+                ₮
+                {new Intl.NumberFormat("mn-MN").format(
+                  savings.reduce((sum, s) => sum + s.amount, 0)
+                )}
+              </p>
+            </div>
+          </div>
+
+            <div className="space-y-2">
+              <h2 className="font-bold text-lg text-gray-800">Миний хөрөнгө</h2>
               {savings.map((s) => (
-                <div key={s.id} className="flex flex-col justify-between p-3 border rounded-lg border-gray-200 hover:shadow-lg hover:scale-105 transition-transform duration-200">
-                  <div className="flex flex-row justify-between items-center mb-2">
+                <div
+                  key={s.id}
+                  onClick={() => router.push(`/green/${s.id}`)}
+                  className="flex flex-col p-4 border border-gray-100 rounded-xl hover:shadow-md hover:border-emerald-100 transition-all duration-300 bg-white"
+                >
+                  <div className="flex flex-row justify-between items-center mb-3">
                     <div>
-                      <p className="font-normal text-gray-600">{s.type}:</p>
-                      <p className="font-normal text-gray-400">{formatAccount(s.id)}</p>
+                      <p className="font-medium text-gray-800 text-sm">{s.type}</p>
                     </div>
-                    <p className="text-gray-600 font-bold">₮{new Intl.NumberFormat('mn-MN').format(s.amount)}</p>
-                  </div>
-                  <div className="flex flex-row justify-between space-x-2">
-                    <button
-                      className="px-3 py-1 bg-gray-200 text-gray-600 rounded-lg hover:bg-green-600 hover:text-white hover:animate-pulse"
-                      onClick={() => {
-                        setSelectedSavingId(s.id);
-                        setShowDepositModal(true);
-                      }}
-                    >
-                      Орлого хийх
-                    </button>
-                    <button
-                      onClick={() => handleGoToSavings(s.id)}
-                      className="px-3 py-1 bg-gray-200 text-gray-600 rounded-lg hover:bg-green-600 hover:text-white hover:animate-pulse"
-                    >
-                      Дэлгэрэнгүй
-                    </button>
+                    <p className="text-gray-800 font-bold text-lg">
+                      ₮{new Intl.NumberFormat("mn-MN").format(s.amount)}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -150,87 +182,6 @@ export default function Home() {
           </>
         )}
       </div>
-      {showDepositModal && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-5 rounded-lg shadow-lg w-100">
-            <h2 className="text-2xl font-bold mb-3 text-center text-gray-700">Орлого нэмэх</h2>
-            <input
-              type="number"
-              placeholder="Дүн (₮)"
-              value={depositAmount}
-              onChange={(e) => setDepositAmount(e.target.value)}
-              className="w-full border p-2 rounded mb-4 border-gray-600 text-gray-700"
-            />
-            <div className="flex justify-between">
-              <button
-                onClick={() => {
-                  setShowDepositModal(false);
-                  setDepositAmount("");
-                }}
-                className="px-4 py-2 bg-gray-400 text-white rounded text-gray-700 text-xl w-32 font-bold hover:bg-gray-600 hover:text-white hover:animate-pulse"
-              >
-                Болих
-              </button>
-              <button
-                onClick={() => {
-                  if (!depositAmount || Number(depositAmount) <= 0) return;
-                  const updated = savings.map((s) =>
-                    s.id === selectedSavingId
-                      ? { ...s, amount: s.amount + Number(depositAmount) }
-                      : s
-                  );
-                  localStorage.setItem("savings", JSON.stringify(updated));
-                  setSavings(updated);
-
-                  const depositNum = Number(depositAmount);
-                  const tokenAmount = Math.floor(depositNum / 10000);
-
-                  if (tokenAmount > 0 && userId) {
-                    addTokens(userId, tokenAmount);
-                    toast.success(`🎉 ${tokenAmount} DigiToken нэмэгдлээ!`, {
-                      duration: 4000,
-                      position: "top-center",
-                    });
-                    toast.success("Орлого амжилттай хийгдлээ!", {
-                      duration: 3000,
-                      position: "top-center",
-                    });
-                  } else {
-                    toast.success("Орлого амжилттай хийгдлээ!", {
-                      duration: 3000,
-                      position: "top-center",
-                    });
-                  }
-
-                  setDepositAmount("");
-                  setShowDepositModal(false);
-                }}
-                className="px-4 py-2 bg-green-600 text-white rounded text-xl font-bold w-32 hover:bg-green-900 hover:text-white hover:animate-pulse"
-              >
-                Нэмэх
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-t-lg shadow-lg border-t border-gray-200 w-100 flex justify-between"> 
-        <button className="flex flex-col items-center text-gray-600 p-2 rounded-lg w-20 hover:shadow-md hover:bg-gray-200 hover:text-black hover:font-bold hover:animate-pulse"> 
-          <Image src="/images/home.png" alt="home" width={30} height={30} /> 
-          <span>Нүүр</span> 
-        </button> 
-        <button className="flex flex-col items-center text-gray-600 p-2 rounded-lg w-20 hover:shadow-md hover:bg-gray-200 hover:text-black hover:font-bold hover:animate-pulse">
-          <Image src="/images/gift.png" alt="home" width={30} height={30} /> 
-          <span>Лояалти</span> 
-        </button> 
-        <button className="flex flex-col items-center text-gray-600 p-2 rounded-lg w-20 hover:shadow-md hover:bg-gray-200 hover:text-black hover:font-bold hover:animate-pulse"> 
-          <Image src="/images/pocket.png" alt="home" width={30} height={30} /> 
-          <span>Хэтэвч</span> 
-        </button> 
-        <button className="flex flex-col items-center text-black shadow-md p-2 rounded-lg bg-gray-200 w-20 font-bold"> 
-          <Image src="/images/saving.png" alt="home" width={30} height={30} /> 
-          <span>Хадгал</span> 
-          </button> 
-      </div> */}
     </div>
   );
 }
