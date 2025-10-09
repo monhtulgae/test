@@ -12,7 +12,7 @@ export default function ListItemClient({
   data: any[];
   url: string;
 }) {
-  // ✅ ALWAYS use array-safe initialization
+  
   const [items, setItems] = useState<Array<any>>(
     Array.isArray(data) ? data : []
   );
@@ -39,7 +39,6 @@ export default function ListItemClient({
     });
   };
 
-  // ✅ Prevent crash: ensure items is always array
   const filteredItems = (Array.isArray(items) ? items : []).filter((org) =>
     String(org?.name || "")
       .toLowerCase()

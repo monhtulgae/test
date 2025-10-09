@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import projects from "@/app/data/projects.json";
 
 export async function GET(
-  request: Request,
   context: { params: { id: string } }
 ) {
   const id = Number(context.params.id);
