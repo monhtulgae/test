@@ -85,7 +85,7 @@ export default function SavingsDetailPage() {
 
   if (!saving) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-800 to-emerald-800 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-emerald-800 p-6">
         <div className="flex items-center gap-3 mb-6">
           <button
             className="text-white/90 hover:text-white transition"
@@ -123,8 +123,10 @@ export default function SavingsDetailPage() {
       : greenAnimation;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-800 to-emerald-800 p-4">
-      <div className="flex items-center justify-between mb-6 mt-3">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-emerald-800 mb-0">
+      <div className="w-full h-2">
+      </div>
+      <div className="flex items-center justify-between mb-6 mt-2 ml-3">
         <div className="flex items-center gap-3">
           <button
             className="text-white/90 hover:text-white transition"
@@ -137,14 +139,14 @@ export default function SavingsDetailPage() {
         </div>
       </div>
 
-      <div className="bg-white/3 rounded-2xl p-5 shadow-xl mb-6">
+      <div className="bg-gray-100 rounded-2xl p-5 shadow-xl m-4">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <p className="text-white/90 text-sm">Нийт үлдэгдэл</p>
-            <p className="text-2xl sm:text-4xl font-extrabold text-white mt-1">
+            <p className="text-black/90 text-sm">Нийт үлдэгдэл</p>
+            <p className="text-2xl sm:text-4xl font-extrabold text-black/90 mt-1">
               {fmtMoney(Number(saving.amount) || 0)}
             </p>
-            <p className="text-white/90 text-lg mt-2">
+            <p className="text-black/90 text-lg mt-2">
               {saving.typeId === "term"
                 ? "Хугацаатай хадгаламж"
                 : saving.typeId === "green"
@@ -156,18 +158,19 @@ export default function SavingsDetailPage() {
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2">
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
           <InfoPill label="Өдрийн хүү дүн" value={computed.dayInterestStr} />
           <InfoPill label="Хуримтлагдсан хүү дүн" value={computed.accumulatedInterestStr} />
           <InfoPill
-            label="Эцсийн хүү (тооцоо) дүн"
+            label="Эцсийн хүү (хугацаа) дүн"
             value={computed.maturityInterestStr}
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl p-5 shadow-lg mb-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="rounded-3xl shadow-lg">
+        <div className="bg-white/5 rounded-xl p-6 shadow-lg m-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
           <DetailRow label="Хүү (жилийн)" value={`${saving.interest}%`} />
           <DetailRow label="Дансны дугаар" value={formatAccount(saving.id)} />
           <DetailRow label="Харилцах данс" value={formatAccount(saving.dans)} />
@@ -198,18 +201,19 @@ export default function SavingsDetailPage() {
           <DetailRow label="Дараагийн олголт (огноо)" value={computed.nextInterestDateStr} />
         </div>
       </div>
-      <div className="w-full rounded-2xl bg-white/10 border border-white/20 overflow-hidden shadow-inner">
-        <Lottie animationData={animationData} loop className="w-full h-full" />
-    </div>
+        <div className=" overflow-hidden rounded-2xl m-3 mb-0">
+          <Lottie animationData={animationData} loop className="w-full h-full" />
+        </div>
+      </div>
     </div>
   );
 }
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between rounded-lg border border-emerald-50 px-3 py-2 bg-emerald-50/20">
-      <span className="text-gray-600">{label}</span>
-      <span className="font-semibold text-gray-900 text-right ml-4 break-words">
+    <div className="flex items-center justify-between rounded-lg px-3 py-2 bg-white/3">
+      <span className="text-white-700">{label}</span>
+      <span className="font-semibold text-white-900 text-right ml-4 break-words">
         {value || "-"}
       </span>
     </div>
@@ -218,9 +222,9 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 
 function InfoPill({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-white/5 backdrop-blur-md px-4 py-3 text-white shadow">
-      <p className="text-white/90 text-sm">{label}</p>
-      <p className="text-lg font-bold mt-1">{value}</p>
+    <div className="rounded-xl bg-white backdrop-blur-md px-4 py-3 text-white shadow">
+      <p className="text-black/90 text-sm">{label}</p>
+      <p className="text-lg font-bold mt-1 text-black">{value}</p>
     </div>
   );
 }
