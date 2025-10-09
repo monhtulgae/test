@@ -6,6 +6,7 @@ import { useUserId } from "../hooks/useUserId";
 import { useLocalSavings } from "../hooks/useLocalSavings";
 import { useLocalTokens } from "../hooks/useLocalTokens";
 import toast from "react-hot-toast";
+import { config } from "@/config/index";
 
 export default function Home() {
   const userId = useUserId();
@@ -22,13 +23,13 @@ export default function Home() {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/create_savings");
+    router.push(`${config.apiBaseUrl}/create_savings`);
   };
   const handleClick1 = () => {
-    router.push("/charity");
+    router.push(`${config.apiBaseUrl}/charity`);
   };
   const handleClick2 = () => {
-    router.push("/greenasset")
+    router.push(`${config.apiBaseUrl}/greenasset`);
   }
 
   const handleGoToSavings = (id: string) => {

@@ -10,6 +10,7 @@ export default function index() {
   return (
       <div className="text-black rounded-2xl bg-color m-0">
         <BackCoin uri={`${config.apiBaseUrl}/`} />
+        {/* <BackCoin uri={`/`} /> */}
         <div className="m-3 text-2xl">Сайн үйлс</div>
         <GraphArea amount={32} interest={-1} />
         <ListItem url="organizations" />
